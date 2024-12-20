@@ -1,13 +1,16 @@
 <template>
-  <h2>{{ titulo }}</h2>
+  <h2>{{ encabezado }}: {{ valor2 }}</h2>
   <p>{{ numero }} <sup>2</sup>={{ calcularCuadradoComputado }}</p>
   <p>{{ numero }} <sup>2</sup>={{ calcularCuadradoComputado }}</p>
   <p>{{ numero }} <sup>2</sup>={{ calcularCuadradoComputado }}</p>
   <p>{{ numero }} <sup>2</sup>={{ calcularCuadradoComputado }}</p>
   <p>{{ numero }} <sup>2</sup>={{ calcularCuadradoComputado }}</p>
   <div>
-    <button v-on:click="incrementar()">+1</button>
-    <button v-on:click="decrementars()">-1</button>
+    <button @:click="incrementar()">+1</button>
+    <button v-on:click="decrementar()">-1</button>
+  </div>
+  <div v-if="esVerdad">
+    <h1>Feliz Navidad</h1>
   </div>
 </template>
 
@@ -15,8 +18,8 @@
 export default {
   data() {
     return {
-      numero: 10,
-      titulo: "Contador",
+      numero: this.valor,
+      titulo: "Contador"
     };
   },
   methods: {
@@ -33,10 +36,42 @@ export default {
   },
   computed: {
     calcularCuadradoComputado() {
-      console.log("Entro a calcular");
+      console.log("Entro a calcular computado");
       return this.numero * this.numero;
     },
   },
+  //primera forma de declaración de un props
+  //props:['encabezado', 'valor']
+
+  //Manera mas especializada para declarar un props
+  //Y algunos ejepmlos de elementos puede tener
+  props:{
+    encabezado: {
+      type:String,
+      validator(value){
+        return value.includes("a");
+      }
+    },
+    valor:Number,
+    valor2:{
+      type:Number,
+      required:false,
+      default:77,
+      validator(value){
+        //programo mi validación bajo mi criterio y retorno
+        //true cuando es valido para mi
+        //y false cuando no es valido para mi
+        return value<=77;
+      }
+    },
+    esVerdad:{
+      type:Boolean,
+      required:true
+    },
+    arreglo:Array,
+    fecha:Date,
+    ObjetoPersona:Object
+  }
 };
 </script>
 
